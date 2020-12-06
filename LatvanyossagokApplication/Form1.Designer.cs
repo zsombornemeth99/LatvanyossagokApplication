@@ -33,7 +33,14 @@ namespace LatvanyossagokApplication
             this.bttn_varos = new System.Windows.Forms.Button();
             this.txtBx_lakossag = new System.Windows.Forms.TextBox();
             this.txtBx_varosnev = new System.Windows.Forms.TextBox();
+            this.grpBx_latvanyossag = new System.Windows.Forms.GroupBox();
+            this.bttn_latvanyossag = new System.Windows.Forms.Button();
+            this.cmbBx_nev = new System.Windows.Forms.ComboBox();
+            this.txtBx_leiras = new System.Windows.Forms.TextBox();
+            this.txtBx_ar = new System.Windows.Forms.TextBox();
+            this.txtBx_nevLatvanyossag = new System.Windows.Forms.TextBox();
             this.grpBx_varos.SuspendLayout();
+            this.grpBx_latvanyossag.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpBx_varos
@@ -50,9 +57,9 @@ namespace LatvanyossagokApplication
             // 
             // bttn_varos
             // 
-            this.bttn_varos.Location = new System.Drawing.Point(6, 103);
+            this.bttn_varos.Location = new System.Drawing.Point(6, 92);
             this.bttn_varos.Name = "bttn_varos";
-            this.bttn_varos.Size = new System.Drawing.Size(203, 29);
+            this.bttn_varos.Size = new System.Drawing.Size(203, 40);
             this.bttn_varos.TabIndex = 0;
             this.bttn_varos.Text = "Hozzáad";
             this.bttn_varos.UseVisualStyleBackColor = true;
@@ -75,11 +82,71 @@ namespace LatvanyossagokApplication
             this.txtBx_varosnev.Size = new System.Drawing.Size(203, 27);
             this.txtBx_varosnev.TabIndex = 1;
             // 
+            // grpBx_latvanyossag
+            // 
+            this.grpBx_latvanyossag.Controls.Add(this.txtBx_nevLatvanyossag);
+            this.grpBx_latvanyossag.Controls.Add(this.bttn_latvanyossag);
+            this.grpBx_latvanyossag.Controls.Add(this.txtBx_leiras);
+            this.grpBx_latvanyossag.Controls.Add(this.cmbBx_nev);
+            this.grpBx_latvanyossag.Controls.Add(this.txtBx_ar);
+            this.grpBx_latvanyossag.Location = new System.Drawing.Point(12, 171);
+            this.grpBx_latvanyossag.Name = "grpBx_latvanyossag";
+            this.grpBx_latvanyossag.Size = new System.Drawing.Size(219, 277);
+            this.grpBx_latvanyossag.TabIndex = 0;
+            this.grpBx_latvanyossag.TabStop = false;
+            this.grpBx_latvanyossag.Text = "Látványosság hozzáadása";
+            // 
+            // bttn_latvanyossag
+            // 
+            this.bttn_latvanyossag.Location = new System.Drawing.Point(6, 231);
+            this.bttn_latvanyossag.Name = "bttn_latvanyossag";
+            this.bttn_latvanyossag.Size = new System.Drawing.Size(203, 40);
+            this.bttn_latvanyossag.TabIndex = 3;
+            this.bttn_latvanyossag.Text = "Hozzáad";
+            this.bttn_latvanyossag.UseVisualStyleBackColor = true;
+            this.bttn_latvanyossag.Click += new System.EventHandler(this.bttn_latvanyossag_Click);
+            // 
+            // cmbBx_nev
+            // 
+            this.cmbBx_nev.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBx_nev.FormattingEnabled = true;
+            this.cmbBx_nev.Location = new System.Drawing.Point(7, 27);
+            this.cmbBx_nev.Name = "cmbBx_nev";
+            this.cmbBx_nev.Size = new System.Drawing.Size(202, 28);
+            this.cmbBx_nev.TabIndex = 3;
+            // 
+            // txtBx_leiras
+            // 
+            this.txtBx_leiras.Location = new System.Drawing.Point(6, 126);
+            this.txtBx_leiras.Multiline = true;
+            this.txtBx_leiras.Name = "txtBx_leiras";
+            this.txtBx_leiras.PlaceholderText = "Adjon meg egy rövid leírást";
+            this.txtBx_leiras.Size = new System.Drawing.Size(203, 103);
+            this.txtBx_leiras.TabIndex = 2;
+            // 
+            // txtBx_ar
+            // 
+            this.txtBx_ar.Location = new System.Drawing.Point(6, 93);
+            this.txtBx_ar.Name = "txtBx_ar";
+            this.txtBx_ar.PlaceholderText = "Adja meg az árat..";
+            this.txtBx_ar.Size = new System.Drawing.Size(203, 27);
+            this.txtBx_ar.TabIndex = 1;
+            this.txtBx_ar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBx_ar_KeyPress);
+            // 
+            // txtBx_nevLatvanyossag
+            // 
+            this.txtBx_nevLatvanyossag.Location = new System.Drawing.Point(6, 61);
+            this.txtBx_nevLatvanyossag.Name = "txtBx_nevLatvanyossag";
+            this.txtBx_nevLatvanyossag.PlaceholderText = "Adja meg a nevét..";
+            this.txtBx_nevLatvanyossag.Size = new System.Drawing.Size(203, 27);
+            this.txtBx_nevLatvanyossag.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.grpBx_latvanyossag);
             this.Controls.Add(this.grpBx_varos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -89,6 +156,8 @@ namespace LatvanyossagokApplication
             this.Text = "Látványosságok";
             this.grpBx_varos.ResumeLayout(false);
             this.grpBx_varos.PerformLayout();
+            this.grpBx_latvanyossag.ResumeLayout(false);
+            this.grpBx_latvanyossag.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -99,6 +168,12 @@ namespace LatvanyossagokApplication
         private System.Windows.Forms.TextBox txtBx_varosnev;
         private System.Windows.Forms.Button bttn_varos;
         private System.Windows.Forms.TextBox txtBx_lakossag;
+        private System.Windows.Forms.GroupBox grpBx_latvanyossag;
+        private System.Windows.Forms.TextBox txtBx_leiras;
+        private System.Windows.Forms.TextBox txtBx_ar;
+        private System.Windows.Forms.ComboBox cmbBx_nev;
+        private System.Windows.Forms.Button bttn_latvanyossag;
+        private System.Windows.Forms.TextBox txtBx_nevLatvanyossag;
     }
 }
 

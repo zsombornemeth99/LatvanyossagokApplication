@@ -14,6 +14,8 @@ namespace LatvanyossagokApplication
     public partial class Form1 : Form
     {
         MySqlConnection conn;
+        MySqlDataAdapter da;
+        DataSet ds;
         public Form1()
         {
             InitializeComponent();
@@ -21,6 +23,12 @@ namespace LatvanyossagokApplication
             kapcsolodas();
 
             tablakLetrehozasa();
+
+            adatbetoltes();
+
+            cmbBx_nev.DataSource = ds.Tables[0];
+            cmbBx_nev.DisplayMember = "nev";
+            cmbBx_nev.ValueMember = "id";
 
             this.FormClosed += (sender, args) =>
             {
@@ -84,7 +92,22 @@ namespace LatvanyossagokApplication
             }
         }
 
+        void adatbetoltes()
+        {
+            string query = "SELECT * FROM varosok";
+            this.da = new MySqlDataAdapter(query, this.conn);
+            this.ds = new DataSet();
+            da.Fill(ds);
+        }
+
         private void txtBx_lakossag_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtBx_ar_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
@@ -101,14 +124,14 @@ namespace LatvanyossagokApplication
                 var nevSelectComm = this.conn.CreateCommand();
                 nevSelectComm.CommandText = "SELECT nev FROM varosok";
                 var nevek = new List<string>();
-                using(var reader = nevSelectComm.ExecuteReader())
+                using (var reader = nevSelectComm.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        nevek.Add(reader.GetString("nev")); 
+                        nevek.Add(reader.GetString("nev").ToLower());
                     }
                 }
-                if (nevek.Contains(txtBx_varosnev.Text))
+                if (nevek.Contains(txtBx_varosnev.Text.ToLower()))
                 {
                     MessageBox.Show("Ilyen névvel már szerepel város az adatbázisban!", "Hiba!");
                 }
@@ -119,24 +142,77 @@ namespace LatvanyossagokApplication
                         MessageBox.Show("A lakosságot csak számmal lehet megadni!", "Hiba!");
                     else
                     {
-                        var nevInsertComm = this.conn.CreateCommand();
-                        nevInsertComm.CommandText = @"INSERT INTO varosok (nev, lakossag)
+                        var varosInsertComm = this.conn.CreateCommand();
+                        varosInsertComm.CommandText = @"INSERT INTO varosok (nev, lakossag)
                                                   VALUES (@nev,@lakossag)";
 
-                        nevInsertComm.Parameters.AddWithValue("@nev", txtBx_varosnev.Text);
-                        nevInsertComm.Parameters.AddWithValue("@lakossag", txtBx_lakossag.Text);
+                        varosInsertComm.Parameters.AddWithValue("@nev", txtBx_varosnev.Text);
+                        varosInsertComm.Parameters.AddWithValue("@lakossag", txtBx_lakossag.Text);
+                        try
+                        {
+                            var muvelet = varosInsertComm.ExecuteNonQuery();
+                            if (muvelet >= 1)
+                            {
+                                MessageBox.Show("Sikeres adatfelvétel", "Siker!");
+                                txtBx_varosnev.Text = "";
+                                txtBx_lakossag.Text = "";
+                                ds.Clear();
+                                da.Fill(ds);
+                            }
+                            else
+                                MessageBox.Show("Nem sikerült az adatot beszúrni!", "Hiba!");
+                        }
+                        catch (MySqlException)
+                        {
+                            MessageBox.Show("Adatbázis hiba!", "Hiba!");
+                        }
+                    }
+                }
+            }
+        }
 
-                        var muvelet = nevInsertComm.ExecuteNonQuery();
+        private void bttn_latvanyossag_Click(object sender, EventArgs e)
+        {
+            if (txtBx_ar.Text == "" || txtBx_leiras.Text == "" || cmbBx_nev.SelectedValue == null)
+                MessageBox.Show("Ellenőrizze, hogy minden mezőt kitöltött e!", "Hiba!");
+            else
+            {
+                int ar;
+                if (!int.TryParse(txtBx_ar.Text, out ar))
+                    MessageBox.Show("Az árat csak számmal lehet megadni!", "Hiba!");
+                else
+                {
+                    var latvanyossagInsertComm = this.conn.CreateCommand();
+                    latvanyossagInsertComm.CommandText = @"
+                        INSERT INTO latvanyossagok (varos_id,nev, leiras, ar)
+                        VALUES (@id,@nev,@leiras,@ar)";
+
+                    latvanyossagInsertComm.Parameters.AddWithValue("@nev", txtBx_nevLatvanyossag.Text);
+                    latvanyossagInsertComm.Parameters.AddWithValue("@leiras", txtBx_leiras.Text);
+                    latvanyossagInsertComm.Parameters.AddWithValue("@ar", txtBx_ar.Text);
+                    latvanyossagInsertComm.Parameters.AddWithValue("@id", cmbBx_nev.SelectedValue);
+
+                    try
+                    {
+                        var muvelet = latvanyossagInsertComm.ExecuteNonQuery();
                         if (muvelet >= 1)
                         {
                             MessageBox.Show("Sikeres adatfelvétel", "Siker!");
-                            txtBx_varosnev.Text = "";
-                            txtBx_lakossag.Text = "";
+                            txtBx_ar.Text = "";
+                            txtBx_leiras.Text = "";
+                            txtBx_nevLatvanyossag.Text = "";
+                            ds.Clear();
+                            da.Fill(ds);
                         }
                         else
                             MessageBox.Show("Nem sikerült az adatot beszúrni!", "Hiba!");
                     }
+                    catch (MySqlException)
+                    {
+                        MessageBox.Show("Adatbázis hiba!", "Hiba!");
+                    } 
                 }
+
             }
         }
     }
