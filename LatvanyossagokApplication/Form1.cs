@@ -83,5 +83,61 @@ namespace LatvanyossagokApplication
                 Environment.Exit(0);
             }
         }
+
+        private void txtBx_lakossag_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void bttn_varos_Click(object sender, EventArgs e)
+        {
+            if (txtBx_varosnev.Text == "" || txtBx_lakossag.Text == "")
+                MessageBox.Show("Ellenőrizze, hogy minden mezőt kitöltött e!", "Hiba!");
+            else
+            {
+                var nevSelectComm = this.conn.CreateCommand();
+                nevSelectComm.CommandText = "SELECT nev FROM varosok";
+                var nevek = new List<string>();
+                using(var reader = nevSelectComm.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        nevek.Add(reader.GetString("nev")); 
+                    }
+                }
+                if (nevek.Contains(txtBx_varosnev.Text))
+                {
+                    MessageBox.Show("Ilyen névvel már szerepel város az adatbázisban!", "Hiba!");
+                }
+                else
+                {
+                    int lakossag;
+                    if (!int.TryParse(txtBx_lakossag.Text, out lakossag))
+                        MessageBox.Show("A lakosságot csak számmal lehet megadni!", "Hiba!");
+                    else
+                    {
+                        var nevInsertComm = this.conn.CreateCommand();
+                        nevInsertComm.CommandText = @"INSERT INTO varosok (nev, lakossag)
+                                                  VALUES (@nev,@lakossag)";
+
+                        nevInsertComm.Parameters.AddWithValue("@nev", txtBx_varosnev.Text);
+                        nevInsertComm.Parameters.AddWithValue("@lakossag", txtBx_lakossag.Text);
+
+                        var muvelet = nevInsertComm.ExecuteNonQuery();
+                        if (muvelet >= 1)
+                        {
+                            MessageBox.Show("Sikeres adatfelvétel", "Siker!");
+                            txtBx_varosnev.Text = "";
+                            txtBx_lakossag.Text = "";
+                        }
+                        else
+                            MessageBox.Show("Nem sikerült az adatot beszúrni!", "Hiba!");
+                    }
+                }
+            }
+        }
     }
 }
