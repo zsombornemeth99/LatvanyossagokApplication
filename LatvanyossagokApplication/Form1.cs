@@ -14,8 +14,10 @@ namespace LatvanyossagokApplication
     public partial class Form1 : Form
     {
         MySqlConnection conn;
-        MySqlDataAdapter da;
-        DataSet ds;
+        MySqlDataAdapter da, da2;
+        DataSet ds, ds2;
+        List<Varos> varosok;
+        List<Latvanyossag> latvanyossagok;
         public Form1()
         {
             InitializeComponent();
@@ -25,10 +27,6 @@ namespace LatvanyossagokApplication
             tablakLetrehozasa();
 
             adatbetoltes();
-
-            cmbBx_nev.DataSource = ds.Tables[0];
-            cmbBx_nev.DisplayMember = "nev";
-            cmbBx_nev.ValueMember = "id";
 
             this.FormClosed += (sender, args) =>
             {
@@ -74,7 +72,7 @@ namespace LatvanyossagokApplication
                                    leiras text COLLATE utf8mb4_hungarian_ci NOT NULL,
                                    ar int(11)  DEFAULT NULL,
                                    PRIMARY KEY (id),
-                                   FOREIGN KEY (varos_id) REFERENCES varosok(id)
+                                   FOREIGN KEY (varos_id) REFERENCES varosok(id) ON DELETE CASCADE ON UPDATE RESTRICT
                                    )";
             var varosokComm = this.conn.CreateCommand();
             var latvanyossagokComm = this.conn.CreateCommand();
@@ -85,7 +83,7 @@ namespace LatvanyossagokApplication
                 varosokComm.ExecuteNonQuery();
                 latvanyossagokComm.ExecuteNonQuery();
             }
-            catch (MySqlException ex)
+            catch (MySqlException)
             {
                 MessageBox.Show("Hiba a tábla létrehozása közben!\n A program bezáródik!");
                 Environment.Exit(0);
@@ -98,6 +96,40 @@ namespace LatvanyossagokApplication
             this.da = new MySqlDataAdapter(query, this.conn);
             this.ds = new DataSet();
             da.Fill(ds);
+            cmbBx_nev.DataSource = ds.Tables[0];
+            cmbBx_nev.DisplayMember = "nev";
+            cmbBx_nev.ValueMember = "id";
+
+            varosok = new List<Varos>();
+            latvanyossagok = new List<Latvanyossag>();
+
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                var varos = new Varos
+                {
+                    Id = (int)item[0],
+                    Nev = item[1].ToString(),
+                    Lakossag = (int)item[2]
+                };
+                varosok.Add(varos);
+            }
+            lstBx_varosok.DataSource = varosok;
+            string sql = "SELECT * FROM latvanyossagok";
+            this.da2 = new MySqlDataAdapter(sql, this.conn);
+            this.ds2 = new DataSet();
+            da2.Fill(ds2);
+            foreach (DataRow item in ds2.Tables[0].Rows)
+            {
+                var latv = new Latvanyossag
+                {
+                    Id = (int)item[0],
+                    VarosId = (int)item[1],
+                    Nev = item[2].ToString(),
+                    Leiras = item[3].ToString(),
+                    Ar = (int)item[4]
+                };
+                latvanyossagok.Add(latv);
+            }
         }
 
         private void txtBx_lakossag_KeyPress(object sender, KeyPressEventArgs e)
@@ -146,7 +178,7 @@ namespace LatvanyossagokApplication
                         varosInsertComm.CommandText = @"INSERT INTO varosok (nev, lakossag)
                                                   VALUES (@nev,@lakossag)";
 
-                        varosInsertComm.Parameters.AddWithValue("@nev", txtBx_varosnev.Text);
+                        varosInsertComm.Parameters.AddWithValue("@nev", txtBx_varosnev.Text.ToUpper());
                         varosInsertComm.Parameters.AddWithValue("@lakossag", txtBx_lakossag.Text);
                         try
                         {
@@ -158,6 +190,7 @@ namespace LatvanyossagokApplication
                                 txtBx_lakossag.Text = "";
                                 ds.Clear();
                                 da.Fill(ds);
+                                adatbetoltes();
                             }
                             else
                                 MessageBox.Show("Nem sikerült az adatot beszúrni!", "Hiba!");
@@ -201,8 +234,7 @@ namespace LatvanyossagokApplication
                             txtBx_ar.Text = "";
                             txtBx_leiras.Text = "";
                             txtBx_nevLatvanyossag.Text = "";
-                            ds.Clear();
-                            da.Fill(ds);
+                            adatbetoltes();
                         }
                         else
                             MessageBox.Show("Nem sikerült az adatot beszúrni!", "Hiba!");
@@ -210,9 +242,45 @@ namespace LatvanyossagokApplication
                     catch (MySqlException)
                     {
                         MessageBox.Show("Adatbázis hiba!", "Hiba!");
-                    } 
+                    }
                 }
 
+            }
+        }
+
+        private void lstBx_varosok_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (lstBx_varosok.SelectedItem != null)
+            {
+                var result = MessageBox.Show("Biztos törli a kijelölt várost?\n" +
+                    "Ha törli, akkor a látványosság is törlődik vele együtt", "Törlés", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    var deleteComm = conn.CreateCommand();
+
+                    deleteComm.CommandText = @"
+                    DELETE FROM varosok 
+                    WHERE id=@szam";
+
+                    var szam = (Varos)lstBx_varosok.SelectedItem;
+                    deleteComm.Parameters.AddWithValue("@szam", szam.Id);
+                    try
+                    {
+                        //Az adatbázisban CASCADE-ra van állítva az idegen kulcs, így ha kitöröljük a várost
+                        //a hozzátartozó látványosság is törlödik
+                        var muvelet = deleteComm.ExecuteNonQuery();
+                        if (muvelet >= 1)
+                        {
+                            MessageBox.Show("Sikeres törlés", "Siker!");
+                            adatbetoltes();
+                        }
+                        else MessageBox.Show("Nem sikerült az adatot törölni!", "Hiba!");
+                    }
+                    catch (MySqlException)
+                    {
+                        MessageBox.Show("Adatbázis hiba!","Hiba!");
+                    }
+                }
             }
         }
     }
