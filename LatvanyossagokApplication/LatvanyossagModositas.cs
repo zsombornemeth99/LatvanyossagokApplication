@@ -1,23 +1,32 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LatvanyossagokApplication
 {
-    public partial class VarosModositas : Form
+    public partial class LatvanyossagModositas : Form
     {
         MySqlConnection conn;
-        int id, lakossag;
-        string nev;
-        public VarosModositas(int id, string nev, int lakossag)
+        int id, ar;
+        string nev, leiras;
+        public LatvanyossagModositas(int id, string nev, string leiras, int ar)
         {
             InitializeComponent();
             kapcsolodas();
             this.id = id;
             this.nev = nev;
-            this.lakossag = lakossag;
-            txtBx_varosnevMod.Text = nev;
-            txtBx_lakossagMod.Text = lakossag.ToString();
+            this.leiras = leiras;
+            this.ar = ar;
+            txtBx_nevLatvanyossagMod.Text = nev;
+            txtBx_leirasMod.Text = leiras;
+            txtBx_arMod.Text = ar.ToString();
 
             this.FormClosed += (sender, args) =>
             {
@@ -45,24 +54,27 @@ namespace LatvanyossagokApplication
                 Environment.Exit(0);
             }
         }
-        private void bttn_varosMod_Click(object sender, EventArgs e)
+
+        private void bttn_latvanyossagMod_Click(object sender, EventArgs e)
         {
-            if (txtBx_varosnevMod.Text == "" || txtBx_lakossagMod.Text == "") 
+            if (txtBx_nevLatvanyossagMod.Text == "" || txtBx_arMod.Text == "" || txtBx_leirasMod.Text == "")
                 MessageBox.Show("Ellenőrízze, hogy mindent kitöltött e!", "Hiba!");
-            else if (txtBx_varosnevMod.Text == nev && txtBx_lakossagMod.Text == lakossag.ToString())
+            else if (txtBx_nevLatvanyossagMod.Text == nev && txtBx_arMod.Text == ar.ToString() && txtBx_leirasMod.Text == leiras)
                 MessageBox.Show("Nem módosított egyetlen adatot sem!", "Hiba!");
             else
             {
                 var updateComm = conn.CreateCommand();
 
                 updateComm.CommandText = @"
-                    UPDATE varosok
+                    UPDATE latvanyossagok
                     SET nev=@nev,
-                        lakossag=@lakossag
+                        leiras=@leiras,
+                        ar=@ar
                     WHERE id=@id";
                 updateComm.Parameters.AddWithValue("@id", this.id);
-                updateComm.Parameters.AddWithValue("@nev", txtBx_varosnevMod.Text);
-                updateComm.Parameters.AddWithValue("@lakossag", txtBx_lakossagMod.Text);
+                updateComm.Parameters.AddWithValue("@nev", txtBx_nevLatvanyossagMod.Text);
+                updateComm.Parameters.AddWithValue("@leiras", txtBx_leirasMod.Text);
+                updateComm.Parameters.AddWithValue("@ar", txtBx_arMod.Text);
 
                 try
                 {

@@ -53,7 +53,7 @@ namespace LatvanyossagokApplication
             this.bttn_varosMod.Location = new System.Drawing.Point(6, 92);
             this.bttn_varosMod.Name = "bttn_varosMod";
             this.bttn_varosMod.Size = new System.Drawing.Size(203, 40);
-            this.bttn_varosMod.TabIndex = 0;
+            this.bttn_varosMod.TabIndex = 3;
             this.bttn_varosMod.Text = "Módosít";
             this.bttn_varosMod.UseVisualStyleBackColor = true;
             this.bttn_varosMod.Click += new System.EventHandler(this.bttn_varosMod_Click);

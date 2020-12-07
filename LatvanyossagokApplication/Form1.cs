@@ -258,6 +258,11 @@ namespace LatvanyossagokApplication
             {
                 bttn_varosMod.Enabled = false;
             }
+
+            if (lstBx_latvanyossagok.SelectedItem == null)
+            {
+                bttn_latvanyossagMod.Enabled = false;
+            }
         }
 
         private void lstBx_latvanyossagok_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -291,6 +296,34 @@ namespace LatvanyossagokApplication
                     }
                     lstBx_varosok.SelectedItem = null;
                 }
+            }
+        }
+
+        private void bttn_latvanyossagMod_Click(object sender, EventArgs e)
+        {
+            if (lstBx_latvanyossagok.SelectedItem != null)
+            {
+                var mod = new LatvanyossagModositas(((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Id,
+                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Nev,
+                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Leiras,
+                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Ar);
+                mod.Show();
+                mod.FormClosed += (sender, args) =>
+                {
+                    adatbetoltes();
+                };
+            }
+        }
+
+        private void lstBx_latvanyossagok_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstBx_latvanyossagok.SelectedItem != null)
+            {
+                bttn_latvanyossagMod.Enabled = true;
+            }
+            else
+            {
+                bttn_varosMod.Enabled = false;
             }
         }
 
