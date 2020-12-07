@@ -163,12 +163,19 @@ namespace LatvanyossagokApplication
                 var nevSelectComm = this.conn.CreateCommand();
                 nevSelectComm.CommandText = "SELECT nev FROM varosok";
                 var nevek = new List<string>();
-                using (var reader = nevSelectComm.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    using (var reader = nevSelectComm.ExecuteReader())
                     {
-                        nevek.Add(reader.GetString("nev").ToLower());
+                        while (reader.Read())
+                        {
+                            nevek.Add(reader.GetString("nev").ToLower());
+                        }
                     }
+                }
+                catch (MySqlException)
+                {
+                    MessageBox.Show("Adatbázis hiba!", "Hiba!");
                 }
                 if (nevek.Contains(txtBx_varosnev.Text.ToLower()))
                 {
@@ -304,8 +311,8 @@ namespace LatvanyossagokApplication
             if (lstBx_latvanyossagok.SelectedItem != null)
             {
                 var mod = new LatvanyossagModositas(((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Id,
-                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Nev,
-                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Leiras,
+                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Nev.ToUpper(),
+                    ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Leiras.ToUpper(),
                     ((Latvanyossag)lstBx_latvanyossagok.SelectedItem).Ar);
                 mod.Show();
                 mod.FormClosed += (sender, args) =>
@@ -329,6 +336,8 @@ namespace LatvanyossagokApplication
 
         private void bttn_latvanyossag_Click(object sender, EventArgs e)
         {
+            var l = latvanyossagok.Find((x) => x.Nev.ToUpper() == txtBx_nevLatvanyossag.Text.ToUpper()
+            && x.VarosId==(int)cmbBx_nev.SelectedValue);
             if (txtBx_ar.Text == "" || txtBx_leiras.Text == "" || cmbBx_nev.SelectedValue == null)
                 MessageBox.Show("Ellenőrizze, hogy minden mezőt kitöltött e!", "Hiba!");
             else
@@ -336,6 +345,10 @@ namespace LatvanyossagokApplication
                 int ar;
                 if (!int.TryParse(txtBx_ar.Text, out ar))
                     MessageBox.Show("Az árat csak számmal lehet megadni!", "Hiba!");
+                else if (latvanyossagok.Contains(l))
+                {
+                    MessageBox.Show("Ilyen névvel már szerepel látványosság a városhoz rendelve!", "Hiba!");
+                }
                 else
                 {
                     var latvanyossagInsertComm = this.conn.CreateCommand();
@@ -343,8 +356,8 @@ namespace LatvanyossagokApplication
                         INSERT INTO latvanyossagok (varos_id,nev, leiras, ar)
                         VALUES (@id,@nev,@leiras,@ar)";
 
-                    latvanyossagInsertComm.Parameters.AddWithValue("@nev", txtBx_nevLatvanyossag.Text);
-                    latvanyossagInsertComm.Parameters.AddWithValue("@leiras", txtBx_leiras.Text);
+                    latvanyossagInsertComm.Parameters.AddWithValue("@nev", txtBx_nevLatvanyossag.Text.ToUpper());
+                    latvanyossagInsertComm.Parameters.AddWithValue("@leiras", txtBx_leiras.Text.ToUpper());
                     latvanyossagInsertComm.Parameters.AddWithValue("@ar", txtBx_ar.Text);
                     latvanyossagInsertComm.Parameters.AddWithValue("@id", cmbBx_nev.SelectedValue);
 

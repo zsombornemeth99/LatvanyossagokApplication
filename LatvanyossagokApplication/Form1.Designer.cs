@@ -93,7 +93,7 @@ namespace LatvanyossagokApplication
             this.grpBx_latvanyossag.Controls.Add(this.txtBx_leiras);
             this.grpBx_latvanyossag.Controls.Add(this.cmbBx_nev);
             this.grpBx_latvanyossag.Controls.Add(this.txtBx_ar);
-            this.grpBx_latvanyossag.Location = new System.Drawing.Point(12, 161);
+            this.grpBx_latvanyossag.Location = new System.Drawing.Point(237, 12);
             this.grpBx_latvanyossag.Name = "grpBx_latvanyossag";
             this.grpBx_latvanyossag.Size = new System.Drawing.Size(219, 277);
             this.grpBx_latvanyossag.TabIndex = 0;
@@ -149,7 +149,7 @@ namespace LatvanyossagokApplication
             // 
             this.lstBx_varosok.FormattingEnabled = true;
             this.lstBx_varosok.ItemHeight = 20;
-            this.lstBx_varosok.Location = new System.Drawing.Point(237, 26);
+            this.lstBx_varosok.Location = new System.Drawing.Point(12, 161);
             this.lstBx_varosok.Name = "lstBx_varosok";
             this.lstBx_varosok.Size = new System.Drawing.Size(219, 124);
             this.lstBx_varosok.TabIndex = 7;
@@ -160,9 +160,9 @@ namespace LatvanyossagokApplication
             // bttn_varosMod
             // 
             this.bttn_varosMod.Enabled = false;
-            this.bttn_varosMod.Location = new System.Drawing.Point(462, 26);
+            this.bttn_varosMod.Location = new System.Drawing.Point(12, 291);
             this.bttn_varosMod.Name = "bttn_varosMod";
-            this.bttn_varosMod.Size = new System.Drawing.Size(203, 40);
+            this.bttn_varosMod.Size = new System.Drawing.Size(219, 40);
             this.bttn_varosMod.TabIndex = 9;
             this.bttn_varosMod.Text = "Város módosítása";
             this.bttn_varosMod.UseVisualStyleBackColor = true;
@@ -172,7 +172,7 @@ namespace LatvanyossagokApplication
             // 
             this.lstBx_latvanyossagok.FormattingEnabled = true;
             this.lstBx_latvanyossagok.ItemHeight = 20;
-            this.lstBx_latvanyossagok.Location = new System.Drawing.Point(237, 161);
+            this.lstBx_latvanyossagok.Location = new System.Drawing.Point(462, 20);
             this.lstBx_latvanyossagok.Name = "lstBx_latvanyossagok";
             this.lstBx_latvanyossagok.Size = new System.Drawing.Size(219, 124);
             this.lstBx_latvanyossagok.TabIndex = 8;
@@ -182,9 +182,9 @@ namespace LatvanyossagokApplication
             // bttn_latvanyossagMod
             // 
             this.bttn_latvanyossagMod.Enabled = false;
-            this.bttn_latvanyossagMod.Location = new System.Drawing.Point(462, 161);
+            this.bttn_latvanyossagMod.Location = new System.Drawing.Point(462, 150);
             this.bttn_latvanyossagMod.Name = "bttn_latvanyossagMod";
-            this.bttn_latvanyossagMod.Size = new System.Drawing.Size(203, 40);
+            this.bttn_latvanyossagMod.Size = new System.Drawing.Size(219, 40);
             this.bttn_latvanyossagMod.TabIndex = 10;
             this.bttn_latvanyossagMod.Text = "Látványosság módosítása";
             this.bttn_latvanyossagMod.UseVisualStyleBackColor = true;
@@ -194,7 +194,7 @@ namespace LatvanyossagokApplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(695, 339);
             this.Controls.Add(this.bttn_latvanyossagMod);
             this.Controls.Add(this.lstBx_latvanyossagok);
             this.Controls.Add(this.bttn_varosMod);
