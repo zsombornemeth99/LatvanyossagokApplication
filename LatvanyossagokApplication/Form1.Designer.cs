@@ -40,6 +40,7 @@ namespace LatvanyossagokApplication
             this.cmbBx_nev = new System.Windows.Forms.ComboBox();
             this.txtBx_ar = new System.Windows.Forms.TextBox();
             this.lstBx_varosok = new System.Windows.Forms.ListBox();
+            this.bttn_varosMod = new System.Windows.Forms.Button();
             this.grpBx_varos.SuspendLayout();
             this.grpBx_latvanyossag.SuspendLayout();
             this.SuspendLayout();
@@ -150,13 +151,26 @@ namespace LatvanyossagokApplication
             this.lstBx_varosok.Name = "lstBx_varosok";
             this.lstBx_varosok.Size = new System.Drawing.Size(219, 124);
             this.lstBx_varosok.TabIndex = 1;
+            this.lstBx_varosok.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_varosok_MouseClick);
             this.lstBx_varosok.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_varosok_MouseDoubleClick);
+            // 
+            // bttn_varosMod
+            // 
+            this.bttn_varosMod.Enabled = false;
+            this.bttn_varosMod.Location = new System.Drawing.Point(462, 26);
+            this.bttn_varosMod.Name = "bttn_varosMod";
+            this.bttn_varosMod.Size = new System.Drawing.Size(203, 40);
+            this.bttn_varosMod.TabIndex = 3;
+            this.bttn_varosMod.Text = "Város módosítása";
+            this.bttn_varosMod.UseVisualStyleBackColor = true;
+            this.bttn_varosMod.Click += new System.EventHandler(this.bttn_varosMod_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.bttn_varosMod);
             this.Controls.Add(this.lstBx_varosok);
             this.Controls.Add(this.grpBx_latvanyossag);
             this.Controls.Add(this.grpBx_varos);
@@ -187,6 +201,7 @@ namespace LatvanyossagokApplication
         private System.Windows.Forms.Button bttn_latvanyossag;
         private System.Windows.Forms.TextBox txtBx_nevLatvanyossag;
         private System.Windows.Forms.ListBox lstBx_varosok;
+        private System.Windows.Forms.Button bttn_varosMod;
     }
 }
 

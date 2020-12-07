@@ -49,7 +49,7 @@ namespace LatvanyossagokApplication
                 conn = new MySqlConnection(sb.ToString());
                 conn.Open();
             }
-            catch (MySqlException ex)
+            catch (MySqlException)
             {
                 MessageBox.Show("Sikertelen kapcsolódás az adatbázishoz!\nA program bezáródik!");
                 Environment.Exit(0);
@@ -201,6 +201,33 @@ namespace LatvanyossagokApplication
                         }
                     }
                 }
+            }
+        }
+
+        private void lstBx_varosok_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (lstBx_varosok.SelectedItem != null)
+            {
+                bttn_varosMod.Enabled = true;
+            }
+            else
+            {
+                bttn_varosMod.Enabled = false;
+            }
+        }
+
+        private void bttn_varosMod_Click(object sender, EventArgs e)
+        {
+            if (lstBx_varosok.SelectedItem != null)
+            {
+                var mod = new VarosModositas(((Varos)lstBx_varosok.SelectedItem).Id,
+                    ((Varos)lstBx_varosok.SelectedItem).Nev, 
+                    ((Varos)lstBx_varosok.SelectedItem).Lakossag);
+                mod.Show();
+                mod.FormClosed += (sender, args) =>
+                {
+                    adatbetoltes();
+                };
             }
         }
 
