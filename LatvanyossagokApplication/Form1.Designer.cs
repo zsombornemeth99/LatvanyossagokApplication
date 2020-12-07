@@ -41,6 +41,7 @@ namespace LatvanyossagokApplication
             this.txtBx_ar = new System.Windows.Forms.TextBox();
             this.lstBx_varosok = new System.Windows.Forms.ListBox();
             this.bttn_varosMod = new System.Windows.Forms.Button();
+            this.lstBx_latvanyossagok = new System.Windows.Forms.ListBox();
             this.grpBx_varos.SuspendLayout();
             this.grpBx_latvanyossag.SuspendLayout();
             this.SuspendLayout();
@@ -150,8 +151,9 @@ namespace LatvanyossagokApplication
             this.lstBx_varosok.Location = new System.Drawing.Point(237, 26);
             this.lstBx_varosok.Name = "lstBx_varosok";
             this.lstBx_varosok.Size = new System.Drawing.Size(219, 124);
-            this.lstBx_varosok.TabIndex = 1;
+            this.lstBx_varosok.TabIndex = 10;
             this.lstBx_varosok.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_varosok_MouseClick);
+            this.lstBx_varosok.SelectedIndexChanged += new System.EventHandler(this.lstBx_varosok_SelectedIndexChanged);
             this.lstBx_varosok.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_varosok_MouseDoubleClick);
             // 
             // bttn_varosMod
@@ -165,11 +167,22 @@ namespace LatvanyossagokApplication
             this.bttn_varosMod.UseVisualStyleBackColor = true;
             this.bttn_varosMod.Click += new System.EventHandler(this.bttn_varosMod_Click);
             // 
+            // lstBx_latvanyossagok
+            // 
+            this.lstBx_latvanyossagok.FormattingEnabled = true;
+            this.lstBx_latvanyossagok.ItemHeight = 20;
+            this.lstBx_latvanyossagok.Location = new System.Drawing.Point(237, 161);
+            this.lstBx_latvanyossagok.Name = "lstBx_latvanyossagok";
+            this.lstBx_latvanyossagok.Size = new System.Drawing.Size(219, 124);
+            this.lstBx_latvanyossagok.TabIndex = 11;
+            this.lstBx_latvanyossagok.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_latvanyossagok_MouseDoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lstBx_latvanyossagok);
             this.Controls.Add(this.bttn_varosMod);
             this.Controls.Add(this.lstBx_varosok);
             this.Controls.Add(this.grpBx_latvanyossag);
@@ -202,6 +215,7 @@ namespace LatvanyossagokApplication
         private System.Windows.Forms.TextBox txtBx_nevLatvanyossag;
         private System.Windows.Forms.ListBox lstBx_varosok;
         private System.Windows.Forms.Button bttn_varosMod;
+        private System.Windows.Forms.ListBox lstBx_latvanyossagok;
     }
 }
 

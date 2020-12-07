@@ -11,7 +11,7 @@ namespace LatvanyossagokApplication
         public int Id { get; set; }
         public string Nev { get; set; }
         public int Lakossag { get; set; }
-
+        public List<Latvanyossag> Latvanyossagok{ get; set; }
         public override string ToString()
         {
             return $"{Nev} - Lakosság: {Lakossag} fő";

@@ -28,6 +28,8 @@ namespace LatvanyossagokApplication
 
             adatbetoltes();
 
+            lstBx_varosok.SelectedItem = null;
+
             this.FormClosed += (sender, args) =>
             {
                 if (conn != null)
@@ -109,7 +111,8 @@ namespace LatvanyossagokApplication
                 {
                     Id = (int)item[0],
                     Nev = item[1].ToString(),
-                    Lakossag = (int)item[2]
+                    Lakossag = (int)item[2],
+                    Latvanyossagok = new List<Latvanyossag>()
                 };
                 varosok.Add(varos);
             }
@@ -129,6 +132,10 @@ namespace LatvanyossagokApplication
                     Ar = (int)item[4]
                 };
                 latvanyossagok.Add(latv);
+            }
+            foreach (var item in latvanyossagok)
+            {
+                varosok.Find((x) => x.Id == item.VarosId).Latvanyossagok.Add(item);
             }
         }
 
@@ -199,6 +206,7 @@ namespace LatvanyossagokApplication
                         {
                             MessageBox.Show("Adatbázis hiba!", "Hiba!");
                         }
+                        lstBx_varosok.SelectedItem = null;
                     }
                 }
             }
@@ -221,13 +229,68 @@ namespace LatvanyossagokApplication
             if (lstBx_varosok.SelectedItem != null)
             {
                 var mod = new VarosModositas(((Varos)lstBx_varosok.SelectedItem).Id,
-                    ((Varos)lstBx_varosok.SelectedItem).Nev, 
+                    ((Varos)lstBx_varosok.SelectedItem).Nev,
                     ((Varos)lstBx_varosok.SelectedItem).Lakossag);
                 mod.Show();
                 mod.FormClosed += (sender, args) =>
                 {
                     adatbetoltes();
                 };
+            }
+        }
+
+        private void lstBx_varosok_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstBx_varosok.SelectedItem != null)
+            {
+                bttn_varosMod.Enabled = true;
+                var v = (Varos)lstBx_varosok.SelectedItem;
+                if (v.Latvanyossagok != null)
+                {
+                    lstBx_latvanyossagok.Items.Clear();
+                    foreach (var item in v.Latvanyossagok)
+                    {
+                        lstBx_latvanyossagok.Items.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                bttn_varosMod.Enabled = false;
+            }
+        }
+
+        private void lstBx_latvanyossagok_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (lstBx_latvanyossagok.SelectedItem != null)
+            {
+                var result = MessageBox.Show("Biztos törli a kijelölt látványosságot?", "Törlés", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    var deleteComm = conn.CreateCommand();
+
+                    deleteComm.CommandText = @"
+                    DELETE FROM latvanyossagok 
+                    WHERE id=@szam";
+
+                    var szam = (Latvanyossag)lstBx_latvanyossagok.SelectedItem;
+                    deleteComm.Parameters.AddWithValue("@szam", szam.Id);
+                    try
+                    {
+                        var muvelet = deleteComm.ExecuteNonQuery();
+                        if (muvelet >= 1)
+                        {
+                            MessageBox.Show("Sikeres törlés", "Siker!");
+                            adatbetoltes();
+                        }
+                        else MessageBox.Show("Nem sikerült az adatot törölni!", "Hiba!");
+                    }
+                    catch (MySqlException)
+                    {
+                        MessageBox.Show("Adatbázis hiba!", "Hiba!");
+                    }
+                    lstBx_varosok.SelectedItem = null;
+                }
             }
         }
 
@@ -270,8 +333,8 @@ namespace LatvanyossagokApplication
                     {
                         MessageBox.Show("Adatbázis hiba!", "Hiba!");
                     }
+                    lstBx_varosok.SelectedItem = null;
                 }
-
             }
         }
 
@@ -305,8 +368,9 @@ namespace LatvanyossagokApplication
                     }
                     catch (MySqlException)
                     {
-                        MessageBox.Show("Adatbázis hiba!","Hiba!");
+                        MessageBox.Show("Adatbázis hiba!", "Hiba!");
                     }
+                    lstBx_varosok.SelectedItem = null;
                 }
             }
         }

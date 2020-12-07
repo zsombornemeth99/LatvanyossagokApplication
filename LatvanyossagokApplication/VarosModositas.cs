@@ -7,12 +7,15 @@ namespace LatvanyossagokApplication
     public partial class VarosModositas : Form
     {
         MySqlConnection conn;
-        int id;
+        int id, lakossag;
+        string nev;
         public VarosModositas(int id, string nev, int lakossag)
         {
             InitializeComponent();
             kapcsolodas();
             this.id = id;
+            this.nev = nev;
+            this.lakossag = lakossag;
             txtBx_varosnevMod.Text = nev;
             txtBx_lakossagMod.Text = lakossag.ToString();
 
@@ -44,7 +47,11 @@ namespace LatvanyossagokApplication
         }
         private void bttn_varosMod_Click(object sender, EventArgs e)
         {
-            if (txtBx_varosnevMod.Text != "" && txtBx_lakossagMod.Text != "")
+            if (txtBx_varosnevMod.Text == "" && txtBx_lakossagMod.Text == "") 
+                MessageBox.Show("Ellenőrízze, hogy mindent kitöltött e!", "Hiba!");
+            else if (txtBx_varosnevMod.Text == nev && txtBx_lakossagMod.Text == lakossag.ToString())
+                MessageBox.Show("Nem módosított egyetlen adatot sem!", "Hiba!");
+            else
             {
                 var updateComm = conn.CreateCommand();
 
@@ -71,7 +78,6 @@ namespace LatvanyossagokApplication
                     MessageBox.Show("Adatbázis hiba!", "Hiba!");
                 }
             }
-            else MessageBox.Show("Ellenőrízze, hogy mindent kitöltött e!", "Hiba!");
         }
     }
 }
