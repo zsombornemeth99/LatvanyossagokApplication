@@ -64,7 +64,7 @@ namespace LatvanyossagokApplication
             this.bttn_varos.Location = new System.Drawing.Point(6, 92);
             this.bttn_varos.Name = "bttn_varos";
             this.bttn_varos.Size = new System.Drawing.Size(203, 40);
-            this.bttn_varos.TabIndex = 1;
+            this.bttn_varos.TabIndex = 3;
             this.bttn_varos.Text = "Hozzáad";
             this.bttn_varos.UseVisualStyleBackColor = true;
             this.bttn_varos.Click += new System.EventHandler(this.bttn_varos_Click);
@@ -96,7 +96,7 @@ namespace LatvanyossagokApplication
             this.grpBx_latvanyossag.Location = new System.Drawing.Point(237, 12);
             this.grpBx_latvanyossag.Name = "grpBx_latvanyossag";
             this.grpBx_latvanyossag.Size = new System.Drawing.Size(219, 277);
-            this.grpBx_latvanyossag.TabIndex = 0;
+            this.grpBx_latvanyossag.TabIndex = 6;
             this.grpBx_latvanyossag.TabStop = false;
             this.grpBx_latvanyossag.Text = "Látványosság hozzáadása";
             // 
@@ -106,14 +106,14 @@ namespace LatvanyossagokApplication
             this.txtBx_nevLatvanyossag.Name = "txtBx_nevLatvanyossag";
             this.txtBx_nevLatvanyossag.PlaceholderText = "Adja meg a nevét..";
             this.txtBx_nevLatvanyossag.Size = new System.Drawing.Size(203, 27);
-            this.txtBx_nevLatvanyossag.TabIndex = 4;
+            this.txtBx_nevLatvanyossag.TabIndex = 8;
             // 
             // bttn_latvanyossag
             // 
             this.bttn_latvanyossag.Location = new System.Drawing.Point(6, 231);
             this.bttn_latvanyossag.Name = "bttn_latvanyossag";
             this.bttn_latvanyossag.Size = new System.Drawing.Size(203, 40);
-            this.bttn_latvanyossag.TabIndex = 7;
+            this.bttn_latvanyossag.TabIndex = 11;
             this.bttn_latvanyossag.Text = "Hozzáad";
             this.bttn_latvanyossag.UseVisualStyleBackColor = true;
             this.bttn_latvanyossag.Click += new System.EventHandler(this.bttn_latvanyossag_Click);
@@ -125,7 +125,7 @@ namespace LatvanyossagokApplication
             this.txtBx_leiras.Name = "txtBx_leiras";
             this.txtBx_leiras.PlaceholderText = "Adjon meg egy rövid leírást";
             this.txtBx_leiras.Size = new System.Drawing.Size(203, 103);
-            this.txtBx_leiras.TabIndex = 6;
+            this.txtBx_leiras.TabIndex = 10;
             // 
             // cmbBx_nev
             // 
@@ -134,7 +134,7 @@ namespace LatvanyossagokApplication
             this.cmbBx_nev.Location = new System.Drawing.Point(7, 27);
             this.cmbBx_nev.Name = "cmbBx_nev";
             this.cmbBx_nev.Size = new System.Drawing.Size(202, 28);
-            this.cmbBx_nev.TabIndex = 3;
+            this.cmbBx_nev.TabIndex = 7;
             // 
             // txtBx_ar
             // 
@@ -142,7 +142,7 @@ namespace LatvanyossagokApplication
             this.txtBx_ar.Name = "txtBx_ar";
             this.txtBx_ar.PlaceholderText = "Adja meg az árat..";
             this.txtBx_ar.Size = new System.Drawing.Size(203, 27);
-            this.txtBx_ar.TabIndex = 5;
+            this.txtBx_ar.TabIndex = 9;
             this.txtBx_ar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBx_ar_KeyPress);
             // 
             // lstBx_varosok
@@ -152,7 +152,7 @@ namespace LatvanyossagokApplication
             this.lstBx_varosok.Location = new System.Drawing.Point(12, 161);
             this.lstBx_varosok.Name = "lstBx_varosok";
             this.lstBx_varosok.Size = new System.Drawing.Size(219, 124);
-            this.lstBx_varosok.TabIndex = 7;
+            this.lstBx_varosok.TabIndex = 4;
             this.lstBx_varosok.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_varosok_MouseClick);
             this.lstBx_varosok.SelectedIndexChanged += new System.EventHandler(this.lstBx_varosok_SelectedIndexChanged);
             this.lstBx_varosok.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_varosok_MouseDoubleClick);
@@ -163,7 +163,7 @@ namespace LatvanyossagokApplication
             this.bttn_varosMod.Location = new System.Drawing.Point(12, 291);
             this.bttn_varosMod.Name = "bttn_varosMod";
             this.bttn_varosMod.Size = new System.Drawing.Size(219, 40);
-            this.bttn_varosMod.TabIndex = 9;
+            this.bttn_varosMod.TabIndex = 5;
             this.bttn_varosMod.Text = "Város módosítása";
             this.bttn_varosMod.UseVisualStyleBackColor = true;
             this.bttn_varosMod.Click += new System.EventHandler(this.bttn_varosMod_Click);
@@ -175,7 +175,7 @@ namespace LatvanyossagokApplication
             this.lstBx_latvanyossagok.Location = new System.Drawing.Point(462, 20);
             this.lstBx_latvanyossagok.Name = "lstBx_latvanyossagok";
             this.lstBx_latvanyossagok.Size = new System.Drawing.Size(219, 124);
-            this.lstBx_latvanyossagok.TabIndex = 8;
+            this.lstBx_latvanyossagok.TabIndex = 12;
             this.lstBx_latvanyossagok.SelectedIndexChanged += new System.EventHandler(this.lstBx_latvanyossagok_SelectedIndexChanged);
             this.lstBx_latvanyossagok.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstBx_latvanyossagok_MouseDoubleClick);
             // 
@@ -185,7 +185,7 @@ namespace LatvanyossagokApplication
             this.bttn_latvanyossagMod.Location = new System.Drawing.Point(462, 150);
             this.bttn_latvanyossagMod.Name = "bttn_latvanyossagMod";
             this.bttn_latvanyossagMod.Size = new System.Drawing.Size(219, 40);
-            this.bttn_latvanyossagMod.TabIndex = 10;
+            this.bttn_latvanyossagMod.TabIndex = 13;
             this.bttn_latvanyossagMod.Text = "Látványosság módosítása";
             this.bttn_latvanyossagMod.UseVisualStyleBackColor = true;
             this.bttn_latvanyossagMod.Click += new System.EventHandler(this.bttn_latvanyossagMod_Click);
